@@ -9,7 +9,7 @@ class Ability
   # name - The name of the ability (see definitions.rb)
   # namespace - The namespace of the ability. You don't need to worry about this.
   # description - The description of the ability (see definitions.rb)
-  # actions - The actions that the ability can do (see definitions.rb)
+  # actions - Controller actions that the ability can check against (see definitions.rb)
   def initialize(code:, name:, namespace: nil, description: '', actions: [])
     @code = code
     @name = name
