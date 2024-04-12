@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'action_controller_patch'
+require_relative 'enforcement'
+
 module ControllerPolicies
   # Railtie for Breadcrumb Helper for Rails integration.
   class Railtie < Rails::Railtie
@@ -9,8 +12,8 @@ module ControllerPolicies
 
     initializer 'controller_policies.action_controller' do |app|
       app.reloader.to_prepare do
-        ::ActionController::Base.singleton_class.include ActionController
-        ::ActionController::API.singleton_class.include ActionController
+        ::ActionController::Base.singleton_class.prepend ActionControllerPatch
+        ::ActionController::API.singleton_class.prepend ActionControllerPatch
       end
     end
 
