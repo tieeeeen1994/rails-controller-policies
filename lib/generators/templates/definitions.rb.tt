@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+module <%= name.classify %>
+  DEFINITIONS = [
+    {
+      # Used as identifier for the policy.
+      code: 'Policy-Code',
+      # Readable name for the policy.
+      name: 'Readable Policy Name',
+      # Readable description for the policy.
+      description: 'Short description of what this policy allows',
+      # Controller actions the policy applies to. It works as matchers based on routes.
+      # It can be empty for manual policy checking.
+      actions: ['feature_app/users', 'data_app/products#index', 'subscriptions']
+    },
+    {
+      code: 'Another-Policy-Code',
+      name: 'Another Policy',
+      description: 'Long description.',
+    }
+  ].freeze
+end
