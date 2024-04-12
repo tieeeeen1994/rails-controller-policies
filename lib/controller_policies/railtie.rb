@@ -9,8 +9,8 @@ module ControllerPolicies
 
     initializer 'controller_policies.action_controller' do |app|
       app.reloader.to_prepare do
-        ::ActionController::Base.extend ActionController
-        ::ActionController::API.extend ActionController
+        ::ActionController::Base.singleton_class.include ActionController
+        ::ActionController::API.singleton_class.include ActionController
       end
     end
 

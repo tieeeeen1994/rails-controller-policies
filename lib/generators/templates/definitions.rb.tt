@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module <%= name.classify %>
+module <%= name.camelize %>
   DEFINITIONS = [
     {
       # Used as identifier for the policy.
