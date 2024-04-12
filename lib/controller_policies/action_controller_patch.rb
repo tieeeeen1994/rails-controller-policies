@@ -8,9 +8,7 @@ module ControllerPolicies
 
       return unless block_given?
 
-      define_method :ability? do |ability_code|
-        block.call(ability_code)
-      end
+      define_method(:ability?, &block)
     end
   end
 end
