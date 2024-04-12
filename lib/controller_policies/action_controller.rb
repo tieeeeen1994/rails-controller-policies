@@ -3,8 +3,11 @@
 module ControllerPolicies
   # Module containing action controller patches.
   module ActionController
-    def has_enforced_policies # rubocop:disable Naming/PredicateName
-      include ControllerPolicies::Enforcement
+    def inherited(subclass)
+      super(subclass)
+      subclass.define_method :has_enforced_policies do
+        include ControllerPolicies::Enforcement
+      end
     end
   end
 end
