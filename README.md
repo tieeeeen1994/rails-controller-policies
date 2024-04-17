@@ -61,7 +61,7 @@ Simply add the line `has_enforced_policies`, and pass a block with one argument 
 ```ruby
 class MyController < ApplicationController
   has_enforced_policies do |ability_code|
-    current_user.abilities.include? ability_code
+    render 'unauthorized' unless current_user.abilities.include? ability_code
   end
 
   # ...
@@ -73,11 +73,13 @@ class MyController < ApplicationController
   has_enforced_policies
 
   def ability?(ability_code)
-    current_user.abilities.include? ability_code
+    render 'unauthorized' unless current_user.abilities.include? ability_code
   end
   # ...
 end
 ```
+
+It is required to use `render` or `redirect_to` within this block **to prevent the controllers from executing the action** when the ability did not exist in the data. The ability checking is done in a `before_action` callback, hence using `render` or `redirect_to` will stop further controller actions. This is a Rails behavior.
 
 Since storing abilities are very flexible and there are truly infinite ways of doing it, *this gem did not support that feature.* Instead, the developer must define their own ability checking.
 
