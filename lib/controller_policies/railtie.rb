@@ -19,10 +19,10 @@ module ControllerPolicies
 
     initializer 'controller_policies.autoloaders' do
       Rails.autoloaders.each do |autoloader|
-        autoloader.ignore(Rails.root.join('app/policies'))
+        autoloader.ignore(Ability.policy_path)
       end
 
-      Dir[Rails.root.join('app/policies/**/*.rb')].each { |definition| require definition }
+      Dir[Ability.policy_path.join('**/*.rb')].each { |definition| require definition }
     end
   end
 end

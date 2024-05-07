@@ -33,19 +33,23 @@ class Ability
     end
 
     # Filter abilities based on namespace.
-    def where(query)
-      case query.class.to_s
-      when 'String'
-        all.select { |ability| ability.namespace.to_s == trim(query).camelize }
-      when 'Module', 'Class'
-        all.select { |ability| ability.namespace == query }
+    def where(*queries)
+      results = []
+      queries.each do |query|
+        case query.class.to_s
+        when 'String'
+          results += all.select { |ability| ability.namespace.to_s == trim(query).camelize }
+        when 'Module', 'Class'
+          results += all.select { |ability| ability.namespace == query }
+        end
       end
+      results
     end
 
     # Find an ability within a namespace.
-    def find(query_string)
-      where(query_string).first
-    end
+    # def find(query_string)
+    #   where(query_string).first
+    # end
 
     # Match abilities based on a matching string or regex. The matcher is based on the namespace.
     def match(expression)
@@ -56,9 +60,9 @@ class Ability
     end
 
     # Find an ability based on a matching string or regex. The matcher is based on the namespace.
-    def mill(expression)
-      match(expression).first
-    end
+    # def mill(expression)
+    #   match(expression).first
+    # end
 
     # Path to the policy folder.
     def policy_path

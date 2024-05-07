@@ -79,7 +79,7 @@ class MyController < ApplicationController
 end
 ```
 
-It is required to use `render` or `redirect_to` within this block **to prevent the controllers from executing the action** when the ability did not exist in the data. The ability checking is done in a `before_action` callback, hence using `render` or `redirect_to` will stop further controller actions. This is a Rails behavior.
+It is recommended to use `render` or `redirect_to` within this block **to prevent the controllers from executing the action** when the ability did not exist in the data. The ability checking is done in a `before_action` callback, hence using `render` or `redirect_to` will stop further controller actions. This is a Rails behavior.
 
 Since storing abilities are very flexible and there are truly infinite ways of doing it, *this gem did not support that feature.* Instead, the developer must define their own ability checking.
 
@@ -105,25 +105,33 @@ The Ability class is a model for abilities that come from the definition files.
 
 Get all abilities from all definitions.
 
+```ruby
+Ability.all
+```
+
 #### #all_codes
 
 Get all ability codes from all definitions.
 
-#### #where(query)
+```ruby
+Ability.all_codes
+```
 
-Filter abilities based on namespace. `query` can be a String, Module or Class.
+#### #where(*queries)
 
-#### #find(query)
+Filter abilities based on namespace. `queries` can be an array of Strings, Modules or Classes.
 
-Find an ability within a namespace. `query` can be a String, Module or Class.
+```ruby
+Ability.where(FeatureOne, FeatureTwo, FeatureOne::SubFeatureA)
+```
 
 #### #match(expression)
 
 Match abilities based on a matching string or regex. The matcher is based on the namespace. `expression` can be a Regexp or String.
 
-#### #mill(expression)
-
-Find an ability based on a matching string or regex. The matcher is based on the namespace. `expression` can be a Regexp or String.
+```ruby
+Ability.match(/FeatureOne(::)?(.)*/)
+```
 
 ### Instance Methods
 
@@ -131,17 +139,33 @@ Find an ability based on a matching string or regex. The matcher is based on the
 
 The code of the ability.
 
+```ruby
+ability.code
+```
+
 #### #name
 
 The name of the ability.
+
+```ruby
+ability.name
+```
 
 #### #description
 
 The description of the ability.
 
+```ruby
+ability.description
+```
+
 #### #actions
 
 Controller actions that the ability can check against.
+
+```ruby
+ability.actions
+```
 
 ## Contributing
 
