@@ -83,6 +83,18 @@ It is required to use `render` or `redirect_to` within this block **to prevent t
 
 Since storing abilities are very flexible and there are truly infinite ways of doing it, *this gem did not support that feature.* Instead, the developer must define their own ability checking.
 
+## Skipping Policy Enforcement in Certain Actions
+
+There might be an event where there is a need to skip automatic policy enforcements in certain actions. As explained above, the policy enforcement is done in a `before_action` callback. To skip a policy enforcement, simply use the `skip_before_action :check_abilities_by_definition` method from Rails. The `:only` and `:except` options are also available to filter actions.
+
+```ruby
+class MyOtherController < MyController
+  skip_before_action :check_abilities_by_definition, only: [:new, :edit]
+
+  # ...
+end
+```
+
 ## Ability
 
 The Ability class is a model for abilities that come from the definition files.
