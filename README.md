@@ -20,7 +20,7 @@ rails g policy_definition my/namespace
 
 This will generate a file: `app/policies/my/namespace/definitions.rb`
 
-The developer should edit this file and add the policies for the app.
+The developer should edit this file and add the policies for the app. **It is important to note that the location of the definitions file should reflect the namespace of the associated controllers.**
 
 ### `actions` key
 
