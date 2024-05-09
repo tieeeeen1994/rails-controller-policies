@@ -10,5 +10,9 @@ module ControllerPolicies
 
       define_method(:ability?, &block)
     end
+
+    def no_enforced_policies(arguments = {})
+      skip_before_action :check_abilities_by_definition, arguments
+    end
   end
 end
