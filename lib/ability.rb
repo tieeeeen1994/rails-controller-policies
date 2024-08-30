@@ -38,7 +38,7 @@ class Ability
       queries.each do |query|
         case query.class.to_s
         when 'String'
-          results += all.select { |ability| ability.namespace.to_s == trim(query).camelize }
+          results += all.select { |ability| ability.namespace.to_s == "Policies::#{trim(query).camelize}" }
         when 'Module', 'Class'
           results += all.select { |ability| ability.namespace == query }
         end
@@ -82,7 +82,7 @@ class Ability
     end
 
     def definition_files_post_processing(file_path)
-      module_constant = convert_namespace(file_path)
+      module_constant = "Policies::#{convert_namespace(file_path)}".constantize
       policy_definitions = module_constant::DEFINITIONS
       policy_definitions.map do |policy_definition|
         policy_definition[:namespace] = module_constant
@@ -101,7 +101,7 @@ class Ability
     end
 
     def convert_namespace(file_path)
-      trim(file_path[policy_path.to_s.length..-4].split('/')[0...-1].join('/')).camelize.constantize
+      trim(file_path[policy_path.to_s.length..-4].split('/')[0...-1].join('/')).camelize
     end
   end
 end
