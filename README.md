@@ -5,7 +5,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'controller_policies', '~> 0.1'
+gem 'controller_policies', '~> 1.0'
 ```
 
 ## Usage
@@ -29,13 +29,15 @@ The `actions` key is an array of strings that contain a list of supported contro
 For example, you have this definition:
 
 ```ruby
-module Base
-  DEFINITIONS = {
-    code: 'policy_code',
-    name: 'Policy Name',
-    description: 'I am a policy.',
-    actions: ['feature_app/users', 'data_app/products#index', 'subscriptions']
-  }
+module Policies
+  module Base
+    DEFINITIONS = {
+      code: 'policy_code',
+      name: 'Policy Name',
+      description: 'I am a policy.',
+      actions: ['feature_app/users', 'data_app/products#index', 'subscriptions']
+    }
+  end
 end
 ```
 
@@ -122,7 +124,11 @@ Ability.all_codes
 Filter abilities based on namespace. `queries` can be an array of Strings, Modules or Classes.
 
 ```ruby
-Ability.where(FeatureOne, FeatureTwo, FeatureOne::SubFeatureA)
+Ability.where(Policies::FeatureOne, Policies::FeatureTwo, Policies::FeatureOne::SubFeatureA)
+```
+
+```ruby
+Ability.where('/feature_one', '/feature_two', '/feature_one/sub_feature_a')
 ```
 
 #### #match(expression)
@@ -130,7 +136,7 @@ Ability.where(FeatureOne, FeatureTwo, FeatureOne::SubFeatureA)
 Match abilities based on a matching string or regex. The matcher is based on the namespace. `expression` can be a Regexp or String.
 
 ```ruby
-Ability.match(/FeatureOne(::)?(.)*/)
+Ability.match(/Policies::FeatureOne(::)?(.)*/)
 ```
 
 ### Instance Methods
